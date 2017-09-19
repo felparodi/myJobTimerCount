@@ -1,6 +1,7 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
+require('./server');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -8,7 +9,11 @@ let win;
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600});
+  win = new BrowserWindow({
+    width: 1200,
+    height: 600,
+    icon: path.join(__dirname,'assets/app-icon.png')
+  });
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -19,7 +24,6 @@ function createWindow () {
   
   // Open the DevTools.
   win.webContents.openDevTools();
-
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -28,6 +32,22 @@ function createWindow () {
     win = null;
   });
 }
+
+// Event handler for asynchronous incoming messages
+ipcMain.on('asynchronous-message', (event, arg) => {
+   console.log(arg);
+
+   // Event emitter for sending asynchronous messages
+   event.sender.send('asynchronous-reply', 'async pong');
+});
+
+// Event handler for synchronous incoming messages
+ipcMain.on('synchronous-message', (event, arg) => {
+   console.log(arg); 
+
+   // Synchronous event emmision
+   event.returnValue = 'sync pong';
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -50,6 +70,5 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

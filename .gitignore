@@ -2,3 +2,5 @@ node_modules
 caches
 package-lock.json
 test-linux-x64
+dist
+src/dist-view

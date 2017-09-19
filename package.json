@@ -2,7 +2,7 @@
   "name": "myjobtimercount",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/felparodi/myJobTimerCount.git"
@@ -15,21 +15,29 @@
   "homepage": "https://github.com/felparodi/myJobTimerCount#readme",
   "scripts": {
     "lint": "eslint --fix src/**/*.js --color ",
-    "clean-dist": "npm run remove-dist && mkdir dist",
-    "remove-dist": "rimraf ./dist",
+    "clean-dist": "npm run remove-dist && mkdir ./src/dist-view",
+    "remove-dist": "rimraf ./src/dist-view",
     "prebuild": "npm run clean-dist && npm run lint",
-    "build": "BABEL_CACHE_PATH=./caches/babel.json babel-node tools/build.js && cp ./src/main.js ./dist/index.js",
-    "electron": "electron ./dist",
-    "build-electron": "npm run build && electron ./dist",
-    "package": "npm run build && electron-packager ./dist \"test\" && echo \"Package Finish\""
+    "build": "BABEL_CACHE_PATH=./caches/babel.json babel-node tools/build-webpack.js",
+    "build:watch": "BABEL_CACHE_PATH=./caches/babel.json babel-node tools/build-webpack.js",
+    "electron": "electron ./src",
+    "build-electron": "npm run build && npm run electron",
+    "package": "npm run build && echo \"Start Packageing\" && electron-packager ./src \"Time Mark\" && echo \"Package Finish\""
   },
   "dependencies": {
+    "electron-compile": "^6.4.1",
+    "express": "^4.15.4",
     "lodash": "4.16.4",
     "moment": "2.15.1",
     "object-assign": "4.1.0",
     "react": "15.4.0",
     "react-dom": "^15.6.1",
-    "redux": "3.5.2"
+    "react-hot-loader": "1.0.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-redux": "^4.0.8",
+    "redux": "3.5.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "6.11.4",
@@ -51,7 +59,6 @@
     "css-loader": "0.23.1",
     "electron": "^1.7.6",
     "electron-packager": "^9.0.1",
-    "electron-prebuilt": "^1.4.13",
     "eslint": "3.2.2",
     "eslint-plugin-import": "1.12.0",
     "eslint-plugin-jsx-a11y": "2.0.1",
@@ -77,6 +84,7 @@
     "style-loader": "0.13.1",
     "stylelint": "7.4.2",
     "stylelint-config-standard": "13.0.2",
+    "to-string-loader": "^1.1.5",
     "url-loader": "0.5.7",
     "webpack": "^3.0.0",
     "webpack-dev-middleware": "^1.12.0",

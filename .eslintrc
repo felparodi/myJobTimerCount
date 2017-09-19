@@ -67,5 +67,10 @@
     "react/wrap-multilines": 1
   },
   "globals": {
-  }
+  },
+  "overrides": [
+    {
+      "excludedFiles": "dist/*.js"
+    }
+  ]
 }

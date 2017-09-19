@@ -1,0 +1,1 @@
+export const HOME_APP_OPEN = 'HOME_APP_OPEN';
