@@ -1,22 +1,36 @@
 // This component handles the App template used on every page.
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Home from './home';
-
+import TraksApp from './traks';
+import { tickAction } from '../actions/traksActions';
 
 const { object } = PropTypes;
 
 class App extends Component {
   constructor(props, context) {
     super(props, context);
+    this.tick = this.tick.bind(this);
   }
+
+  componentDidMount() {
+    this.timer = setInterval(this.tick, 300);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  tick() {
+    this.props.tick()
+  }
+
 
   render() {
     return (
       <div className="app-container flex">
         <div className="sidebar"></div>
         <div className="app-body">
-          <Home/>
+          <TraksApp/>
         </div>
       </div>
     );
@@ -24,9 +38,15 @@ class App extends Component {
 }
 
 App.propTypes = {
-  user: object
+  app: object
 };
 
-const mapState = (state) => ({ user: state.user });
+const mapState = (state) => ({ app: state.app });
 
-export default connect(mapState)(App);
+const mapDispatch = (dispatch) => {
+  return {
+    tick: () => dispatch(tickAction())
+  };
+};
+
+export default connect(mapState, mapDispatch)(App);

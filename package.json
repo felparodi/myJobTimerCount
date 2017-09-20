@@ -30,6 +30,7 @@
     "lodash": "4.16.4",
     "moment": "2.15.1",
     "object-assign": "4.1.0",
+    "promise": "^8.0.1",
     "react": "15.4.0",
     "react-dom": "^15.6.1",
     "react-hot-loader": "1.0.1",

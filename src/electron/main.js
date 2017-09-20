@@ -1,7 +1,8 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 require('./server');
+require('./actions');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -32,22 +33,6 @@ function createWindow () {
     win = null;
   });
 }
-
-// Event handler for asynchronous incoming messages
-ipcMain.on('asynchronous-message', (event, arg) => {
-   console.log(arg);
-
-   // Event emitter for sending asynchronous messages
-   event.sender.send('asynchronous-reply', 'async pong');
-});
-
-// Event handler for synchronous incoming messages
-ipcMain.on('synchronous-message', (event, arg) => {
-   console.log(arg); 
-
-   // Synchronous event emmision
-   event.returnValue = 'sync pong';
-});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
