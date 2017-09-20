@@ -26,6 +26,7 @@ class App extends Component {
 
 
   render() {
+    const { app } = this.props
     return (
       <div className="app-container flex">
         <div className="sidebar"></div>

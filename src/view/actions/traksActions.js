@@ -27,8 +27,16 @@ export const updateTrakAction = (pos, e) => {
   };
 };
 
-export const trakTicks = () => {
+export const addTrak = () => {
   return (dispatch) => {
-        dispatch(tickAction());
+     dispatch(addTrakAction());
   };
 };
+
+/**
+export const cleanAdopters = () => {
+  return (dispatch) => {
+    dispatch(cleanAdoptersSuccess());
+  };
+};
+*/

@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as traksAcction from '../../actions/traksActions';
+import * as traksAction from '../../actions/traksActions';
 import TimeTrak from './TimeTrak';
 
 const domain = 'https://login.salesforce.com/services/oauth2/authorize?response_type=code';
@@ -14,14 +14,12 @@ const link = `${domain}&client_id=${consumerKey}&redirect_uri=${callbackEncode}`
 class TraksApp extends Component {
   constructor(props, context) {
     super(props, context);
+    this.addTrak = this.addTrak.bind(this);
    
   }
 
   addTrak() {
-    const { connectionService } = window;
-    connectionService.service(connectionService.actions.test, 'sync ping').then(console.log).catch(console.log);
-    connectionService.subcribe('a',console.log);
-    console.log('Continue');
+    this.props.actions.addTrak();
   }
 
   render() {
@@ -50,7 +48,7 @@ TraksApp.propTypes = {
 const mapState = (state) => ({ traks: state.traks });
 const mapDispatch = (dispatch) => {
   return {
-    actions: bindActionCreators(traksAcction, dispatch)
+    actions: bindActionCreators(traksAction, dispatch)
   };
 };
 

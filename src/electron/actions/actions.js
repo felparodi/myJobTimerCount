@@ -8,7 +8,6 @@ const error = (respose) => { return { success: false, respose } };
 const subcribe = (action, func) => {
   ipcMain.on(action, (event, request) => {
     console.log(action, request); 
-    // Synchronous event emmision
     const respose = (res) => { event.sender.send(request.conctionId, res); }
     const e = {
       action,
@@ -24,16 +23,15 @@ ipcMain.on('subcribe-to-action', (event) => {
 })
 
 const send = (action, arg) => {
-  console.log(sendSubcribe.length);
   sendSubcribe.map((e) => {
     e.sender.send(action, arg);
   })
 }
 
-//Test
+/*//Test
 subcribe('test-asyc-action', (e) => {  setTimeout(()=>(e.success('async pong')),5000) });
 setInterval(()=>{send('test-subcribe','Test')},10000);
-
+//*/
 module.exports = {
   subcribe,
   send,

@@ -13,14 +13,14 @@ const createSubTraker = (subTrak) => {
 }
 
  const addTrak = (traks) => {
-    const newTraks = traks.concat([this.createTraker(traks.length)])
+    const newTraks = traks.concat([createTraker(traks.length)])
     return newTraks;
 }
 
 const addSubTrak = (traks, pos) => {
   const newTraks = traks.map((trak) => {
     if (trak.trak === pos.trak) {
-      trak.sub = trak.sub.concat([this.createSubTraker(trak.sub.length)]);
+      trak.sub = trak.sub.concat([createSubTraker(trak.sub.length)]);
     }
     return trak;
   });

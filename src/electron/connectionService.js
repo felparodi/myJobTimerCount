@@ -11,8 +11,7 @@ ipcRenderer.send(actions.subcribe);
 
 const makeid = (size = 20) => {
   let text = "";
-  let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
+  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   for (let i = 0; i < size; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
 
