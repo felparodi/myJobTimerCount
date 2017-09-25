@@ -23,7 +23,6 @@ const createRequest = (arg) => { return {  conctionId: makeid(), arg }; };
 const service = (action, object) => {
   return new Promise((resolve, reject) =>{
     const request = createRequest(object);
-    console.log(request);
     ipcRenderer.on(request.conctionId, (e, con) => {
       ipcRenderer.removeAllListeners(request.conctionId);
       if (con.success) {

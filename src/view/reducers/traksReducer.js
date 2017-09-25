@@ -4,12 +4,12 @@ import initialState from './initialState';
 
 const createTraker = (trak) => {
   trak = trak ? trak : 0;
-  return { trak:trak, elapsed: 0, start: new Date(), lastStart: new Date(), count: 0, stop: false, stops: [], sub: [], value: {}, trak };
+  return { trak:trak, elapsed: 0, start: new Date(), lastStart: new Date(), count: 0, stop: false, stops: [], sub: [], value: {category:''}, trak };
 }
 
 const createSubTraker = (subTrak) => {
   subTrak = subTrak ? subTrak : 0;
-  return { subTrak, elapsed: 0, start: new Date(), lastStart: new Date(), count: 0, stop: false, stops: [], value: {} }
+  return { subTrak, elapsed: 0, start: new Date(), lastStart: new Date(), count: 0, stop: false, stops: [], value: {category:''} }
 }
 
  const addTrak = (traks) => {
@@ -54,6 +54,7 @@ const tick = (traks) => {
 }
 
 const valueChange = (traks, pos, e) => {
+  console.log(pos, e.target);
   const newTraks = traks.map((trak) => {
     if (trak.trak === pos.trak) {
       if (!pos.sub && pos.sub !== 0) {
@@ -70,16 +71,29 @@ const valueChange = (traks, pos, e) => {
   return newTraks;
 }
 
+const stopTrakHelper  = (trak) => {
+  trak.stop = !trak.stop;
+  if (trak.stop) {
+    trak.count = trak.elapsed
+    trak.stops.push({ start: new Date() })
+  } else {
+    trak.stops[trak.stops.length-1].end =  new Date();
+    trak.lastStart = new Date();
+  }
+  return trak
+}
+
 const stopTrak = (traks, pos) => {
-  const newTraks = traks.map((trak, i) => {
+  const newTraks = traks.map((trak) => {
     if (trak.trak === pos.trak) {
-      trak.stop = !trak.stop
-      if (trak.stop) {
-        trak.count = trak.count + trak.elapsed
-        trak.stops.push({ start: new Date() })
+      if (!pos.sub && pos.sub !== 0) {
+        return stopTrakHelper(trak);
       } else {
-        trak.stops[trak.stops.length-1].end =  new Date();
-        trak.lastStart = new Date();
+        trak.sub.map( (subTrak) => {
+          if (subTrak.subTrak === pos.sub) return stopTrakHelper(subTrak);
+
+          return subTrak;
+        });
       }
     }
     return trak;
@@ -89,15 +103,18 @@ const stopTrak = (traks, pos) => {
 
 const removeTrak = (traks, pos) => {
   const newTraks = [];
-  traks.map((trak) => {
+  traks.map((trak, i) => {
     if (trak.trak == pos.trak) {
       if (!pos.sub && pos.sub !== 0) return
       const sub = [];
-      trak.sub.map((subTrak) => {
+      trak.sub.map((subTrak, j) => {
         if (subTrak.subTrak === pos.sub) return
-        sub.push(trak);
+        subTrak.subTrak = j
+        sub.push(subTrak);
       })
+      trak.sub = sub;
     }
+    trak.trak = i
     newTraks.push(trak);
   })
   return newTraks;

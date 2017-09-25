@@ -1,5 +1,13 @@
 import React, { PropTypes } from 'react';
 import '../../style/TimeTrak.scss';
+import TimeSubTrak from './TimeSubTrak';
+import FaStopCircle from 'react-icons/fa/stop-circle';
+import FaPlayCircle from 'react-icons/fa/play-circle';
+import MdAlarmAdd from 'react-icons/md/alarm-add';
+import MdRemove from 'react-icons/md/highlight-remove';
+import MdTimerOn from'react-icons/md/timer';
+import MdTimerOff from'react-icons/md/timer-off';
+
 
 const TimeTraker = ({ onStop, onChange, onAddSubTrak, onRemove, trak }) => {
 
@@ -10,63 +18,52 @@ const TimeTraker = ({ onStop, onChange, onAddSubTrak, onRemove, trak }) => {
   seconds = seconds < 10 ? '0'+seconds : seconds;
   let minute = Math.round(elapsed/60) % 60
   minute = minute < 10 ? '0'+minute : minute;
-  const hour = Math.round(elapsed/360)
+  const hour = Math.round(elapsed/3600)
 
   const change = (e) => {
-    if (onChange) onChange(trak.trak, e);
+    if (onChange) onChange({ trak:trak.trak }, e);
   }
   const stop = () => {
-    if (onStop) onStop(trak.trak);
+    if (onStop) onStop( { trak: trak.trak } );
   }
 
   const addSubTrak = () => {
-    if (onAddSubTrak) onAddSubTrak(trak.trak);
+    if (onAddSubTrak) onAddSubTrak({ trak:trak.trak });
   }
 
   const remove = () => {
-    if (onRemove) onRemove(trak.trak);
+    if (onRemove) onRemove( { trak: trak.trak });
   }
 
   const subTraks = sub.map((subTrak) => {
-    return (<div> { subTrak.subTrak } {subTrak.elapsed/1000} </div>);
+    return (<TimeSubTrak sub={subTrak}  onChange={onChange} onStop={onStop} onRemove={onRemove} trak={trak.trak}/>);
   })
   return (
     <div className='time-traker'>
       <div className="trak-container">
         <div>
-          <div className="trak-timer">
-            <span className="trak-number">
-            { trak.trak }
-            </span>
-            <span className="trak-time">
-          	{ hour }:{minute}:{seconds}
-            </span>
-          </div>
-        
-          <button onClick={stop}> { trak.stop ? 'Play' :'Stop' }</button>
-          <button onClick={addSubTrak}> Add SubTask </button>
-          <button onClick={remove}> Remove </button>
+          <span>{ trak.stop ? (<MdTimerOff size={30}/>) : (<MdTimerOn size={30}/>)} </span>
+        </div>
+        <div  className="trak-timer">
+          <span className="trak-time">
+          { hour }:{minute}:{seconds}
+          </span>
         </div>
         <div>
-          <span>Category:</span>
-            <input type='text'
-                className='trak-input-category'
-                name='category'
-                value={value.category}
-                onChange={change}/>
-          <span>Estimate(Hours):</span>
-          <input type='number'
-                className='trak-input'
-                name='estimate'
-                value={value.estimate}
-                onChange={change}/>
+          <input type='text'
+            className='trak-input-category'
+            name='category'
+            value={value.category}
+            onChange={change}/>
+        </div>
+        <div>
+          <span onClick={stop}> { trak.stop ? (<FaPlayCircle/>) : (<FaStopCircle/>) }</span>
+          <span onClick={addSubTrak}> <MdAlarmAdd/> </span>
+          <span onClick={remove}> <MdRemove/> </span>
         </div>
       </div>
       <div className='sub-task'>
-        <div className='tab'></div>
-        <div>
         { subTraks }
-        </div>
       </div>
     </div>
   );

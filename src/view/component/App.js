@@ -2,36 +2,36 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import TraksApp from './traks';
+import SfdcUserApp from './sfdc-users';
+import ButtomGroup from './buttonGroup';
 import { tickAction } from '../actions/traksActions';
+
 
 const { object } = PropTypes;
 
 class App extends Component {
   constructor(props, context) {
     super(props, context);
-    this.tick = this.tick.bind(this);
   }
 
-  componentDidMount() {
-    this.timer = setInterval(this.tick, 300);
+ selectApp (app) {
+    switch (app) {
+      case 'TRAKER': return (<TraksApp/>);
+      case 'SFDC-CONNECT': return (<SfdcUserApp/>);
+      default: return '';
+    }
   }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  tick() {
-    this.props.tick()
-  }
-
 
   render() {
-    const { app } = this.props
+    const { app } = this.props;
+    let selectApp = this.selectApp(app);
     return (
       <div className="app-container flex">
-        <div className="sidebar"></div>
+        <div className="sidebar">
+          <ButtomGroup/>
+        </div>
         <div className="app-body">
-          <TraksApp/>
+          {selectApp}
         </div>
       </div>
     );

@@ -1,8 +1,9 @@
 import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import autoprefixer from 'autoprefixer';
-
+const config = {
+    iconPath: `${__dirname}/node_modules/react-icons`
+};
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
   __DEV__: false
@@ -22,7 +23,7 @@ export default {
     publicPath: '/',
     filename: '[name].js'
   },
-  target: 'atom', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
+  target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   plugins: [
     // Hash the files using MD5 so that their names change when the content changes.
     new WebpackMd5Hash(),
@@ -32,9 +33,6 @@ export default {
 
     // Tells React to build in prod mode. https://facebook.github.io/react/downloads.html
     new webpack.DefinePlugin(GLOBALS),
-
-    // Generate an external css file with a hash in the filename
-    new ExtractTextPlugin('style.css'),
 
     // Eliminate duplicate packages when generating bundle
     new webpack.optimize.DedupePlugin()
@@ -48,8 +46,9 @@ export default {
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
       { test: /\.(jpe?g|png|gif)$/i, loader: 'file?name=[name].[ext]' },
       { test: /\.ico$/, loader: 'file?name=[name].[ext]' },
-      { test: /\.css$/,loaders: ['to-string-loader', 'css-loader']},
-      { test: /\.scss$/,loaders: ['to-string-loader', 'style-loader','css-loader','sass-loader']}
+      { test: /\.css$/, loaders: ['to-string-loader', 'css-loader']},
+      { test: /\.scss$/, loaders: ['to-string-loader', 'style-loader','css-loader','sass-loader']},
+      { test: /react-icons\/(.)*(.js)$/, loader: 'babel-loader', include: config.iconPath}
     ]
   }
 };

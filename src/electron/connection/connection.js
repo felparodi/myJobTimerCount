@@ -6,6 +6,7 @@ const success = (respose) => { return { success: true, respose } };
 const error = (respose) => { return { success: false, respose } };
 
 const subcribe = (action, func) => {
+  console.log('subcribe', action, func);
   ipcMain.on(action, (event, request) => {
     console.log(action, request); 
     const respose = (res) => { event.sender.send(request.conctionId, res); }

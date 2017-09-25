@@ -8,15 +8,15 @@ body {
 	display: flex;
 }
 html {
-	background: blue;
+	background: #7e7b90;
 }
 
 .sidebar {
-	width: 50px;
+	width: 75px;
+	padding: 5px;
 	background-color: #702ba5;
-    border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-
+    overflow-y: hidden;
     background-color: #702ba5;
 }
 
@@ -25,4 +25,10 @@ html {
 }
 .app-container {
 	min-height: 100%;
+	.actions-bar {
+	    display: flex;
+	    width: 100%;
+	    background-color: #745b88;
+	    padding: 5px;
+	}
 }

@@ -69,8 +69,5 @@
   "globals": {
   },
   "overrides": [
-    {
-      "excludedFiles": "dist/*.js"
-    }
   ]
 }

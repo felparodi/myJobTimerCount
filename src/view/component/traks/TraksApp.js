@@ -5,34 +5,64 @@ import { bindActionCreators } from 'redux';
 import * as traksAction from '../../actions/traksActions';
 import TimeTrak from './TimeTrak';
 
-const domain = 'https://login.salesforce.com/services/oauth2/authorize?response_type=code';
-const consumerKey = '3MVG9g9rbsTkKnAXZhoZl0X94zw4LamYVowluBzxqgeaqBqgFBCjUx.gguCrM5z5qWpzjnJ1wqCw8KJPNZDx4';
-const callback = 'http://localhost:37259/aouth/sforce';
-const callbackEncode = encodeURIComponent(callback);
-const link = `${domain}&client_id=${consumerKey}&redirect_uri=${callbackEncode}`;
-
 class TraksApp extends Component {
   constructor(props, context) {
     super(props, context);
     this.addTrak = this.addTrak.bind(this);
-   
+    this.tick = this.tick.bind(this);
+    this.addSubTark = this.addSubTark.bind(this);
+    this.stopTrak = this.stopTrak.bind(this);
+    this.removeTrak = this.removeTrak.bind(this);
+    this.updateTrak = this.updateTrak.bind(this);
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(this.tick, 1000);
+    this.tick();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  tick() {
+    this.props.actions.tick();
   }
 
   addTrak() {
     this.props.actions.addTrak();
   }
 
+  addSubTark(pos) {
+    this.props.actions.addSubTrak(pos);
+  }
+
+  stopTrak(pos) {
+    this.props.actions.stopTrak(pos);
+  }
+
+  removeTrak(pos) {
+    console.log('remove', pos);
+    this.props.actions.removeTrak(pos);
+  }
+
+  updateTrak(pos, e) {
+    this.props.actions.updateTrak(pos, e);
+  }
+
   render() {
     const { traks } = this.props
-    const { addTrak } = this
+    const { addTrak, stopTrak, addSubTark, removeTrak, updateTrak } = this
     const traksRender = traks.map( (trak, i) => {
-      return (<TimeTrak trak={trak}/>)
+      return (<TimeTrak onStop={stopTrak} onChange={updateTrak} onAddSubTrak={addSubTark} onRemove={removeTrak} trak={trak}/>)
     });   
     return (
       <div>
-      	<button onClick={addTrak}>
-          Add Trak
-        </button>
+        <div className='actions-bar'>
+        	<button onClick={addTrak}>
+            Add Trak
+          </button>
+        </div>
         <div>
         {traksRender}
         </div>
