@@ -7,12 +7,9 @@ export const sfdcInfoConnectionAction = (info) => {
   };
 };
 
-export const sfdcGetInfoConnect = () => {
-  return (dispatch) => {
-  	window.connectionService.service('get-oauth-connect-info').then(
-      (req) => {
-        dispatch(sfdcInfoConnectionAction(req));
-      }
-    );
+export const addSfdcUser = () => {
+  return () => {
+  	window.connectionService.service('sfdc-add-new-user')
   };
 };
+

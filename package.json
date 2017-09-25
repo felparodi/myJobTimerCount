@@ -19,10 +19,13 @@
     "remove-dist": "rimraf ./src/dist-view",
     "prebuild": "npm run clean-dist && npm run lint",
     "build": "BABEL_CACHE_PATH=./caches/babel.json babel-node tools/build-webpack.js",
-    "build:watch": "BABEL_CACHE_PATH=./caches/babel.json babel-node tools/build-webpack.js",
     "electron": "electron ./src",
     "build-electron": "npm run build && npm run electron",
-    "package": "npm run build && echo \"Start Packageing\" && electron-packager ./src \"Time Mark\" && echo \"Package Finish\""
+    "pre-package": "npm run build",
+    "package-os": "electron-packager . \"Time Mark\" --platform darwin --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
+    "package-linux": "electron-packager . \"Time Mark\" --platform linux --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
+    "package-win32": "electron-packager . \"Time Mark\" --platform win32 --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
+    "package-all": "electron-packager . \"Time Mark\" --platform all --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png"
   },
   "dependencies": {
     "electron-compile": "^6.4.1",
@@ -31,6 +34,7 @@
     "moment": "2.15.1",
     "object-assign": "4.1.0",
     "promise": "^8.0.1",
+    "prune": "0.0.2",
     "react": "15.4.0",
     "react-dom": "^15.6.1",
     "react-fa": "^4.2.0",
@@ -60,7 +64,7 @@
     "connect-history-api-fallback": "1.2.0",
     "cross-env": "2.0.0",
     "css-loader": "^0.23.1",
-    "electron": "^1.7.6",
+    "electron": "1.4.3",
     "electron-packager": "^9.0.1",
     "eslint": "3.2.2",
     "eslint-plugin-import": "1.12.0",

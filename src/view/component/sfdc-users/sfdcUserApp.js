@@ -3,18 +3,25 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import FaBeer from 'react-icons/fa/beer';
+import * as sfdcActions from '../../actions/sfdcActions';
 //import Icon from 'react-fa'
 
 class SfdcUserApp extends Component {
   constructor(props, context) {
     super(props, context);
+    this.addUser = this.addUser.bind(this);
+  }
+
+  addUser() {
+    const { addSfdcUser } = this.props.actions
+    addSfdcUser();
   }
 
   render() {
-    const { sfdcInfo } = this.props;
+    const { addUser } = this;
     return (
       <div>
-        <a href={sfdcInfo.link} target="_blank"><span>Add Salesforce User <FaBeer/></span></a>
+        <button onClick={addUser} target="_blank"><span>Add Salesforce User <FaBeer/></span></button>
       </div>
     );
   }
@@ -24,10 +31,10 @@ SfdcUserApp.propTypes = {
 
 };
 
-const mapState = (state) => ({ sfdcInfo: state.sfdcInfo });
+const mapState = (state) => ({});
 const mapDispatch = (dispatch) => {
   return {
-    actions: {}
+    actions: bindActionCreators(sfdcActions, dispatch)
   };
 };
 
