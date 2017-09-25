@@ -7,7 +7,7 @@ const callbackEncode = encodeURIComponent(callback);
 const scecretCode = '4625115979329128737';
 const authorizeLink = `${domain}${authorize}&client_id=${consumerKey}&redirect_uri=${callbackEncode}`;
 const getTokenUrl = (code) =>{
-	return `${token}&client_id=${consumerKey}&redirect_uri=${callbackEncode}&code=${code}&client_secret=${scecretCode}`;
+	return `${domain}${token}&client_id=${consumerKey}&redirect_uri=${callbackEncode}&code=${code}&client_secret=${scecretCode}`;
 } 
 
 module.exports = {

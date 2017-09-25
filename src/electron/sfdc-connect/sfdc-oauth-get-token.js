@@ -1,12 +1,8 @@
-const http = require("http");
+const https = require("https");
 const sfdcOauthInfo = require('./sfdc-oauth-info');
 const database = require('../database');
 
 const registerClient = (code) => {
-	const config = {
-		host: sfdcOauthInfo.domain,
-		path: sfdcOauthInfo.getTokenUrl(code)
-	}
 	const callback = (response) => {
 	  let str = ''
 	  response.on('data', (chunk) => {
@@ -17,7 +13,7 @@ const registerClient = (code) => {
 	    database.push('sfdc-client', str);
 	  });
 	}
-	http.get(config, callback);
+	https.get( sfdcOauthInfo.getTokenUrl(code), callback);
 }
 
 module.exports = {
