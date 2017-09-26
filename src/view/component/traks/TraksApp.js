@@ -75,7 +75,7 @@ TraksApp.propTypes = {
 
 };
 
-const mapState = (state) => ({ traks: state.traks });
+const mapState = (state) => ({ traks: state.traks, selctedSfcdUser: state.selctedSfcdUser });
 const mapDispatch = (dispatch) => {
   return {
     actions: bindActionCreators(traksAction, dispatch)

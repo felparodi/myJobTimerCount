@@ -22,12 +22,13 @@
     "electron": "electron ./src",
     "build-electron": "npm run build && npm run electron",
     "pre-package": "npm run build",
-    "package-os": "electron-packager . \"Time Mark\" --platform darwin --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
-    "package-linux": "electron-packager . \"Time Mark\" --platform linux --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
-    "package-win32": "electron-packager . \"Time Mark\" --platform win32 --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
-    "package-all": "electron-packager . \"Time Mark\" --platform all --version 1.4.3 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png"
+    "package-os": "electron-packager . \"Time Mark\" --platform darwin --version 1.7.8 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
+    "package-linux": "electron-packager . \"Time Mark\" --platform linux --version 1.7.8 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
+    "package-win32": "electron-packager . \"Time Mark\" --platform win32 --version 1.7.8 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png",
+    "package-all": "electron-packager . \"Time Mark\" --platform all --version 1.7.8 --out ./build --overwrite --icon ./src/electron/asset/app-icon.png"
   },
   "dependencies": {
+    "electron": "^1.7.8",
     "electron-compile": "^6.4.1",
     "express": "^4.15.4",
     "lodash": "^4.17.4",
@@ -64,7 +65,6 @@
     "connect-history-api-fallback": "1.2.0",
     "cross-env": "2.0.0",
     "css-loader": "^0.23.1",
-    "electron": "1.4.3",
     "electron-packager": "^9.0.1",
     "eslint": "3.2.2",
     "eslint-plugin-import": "1.12.0",

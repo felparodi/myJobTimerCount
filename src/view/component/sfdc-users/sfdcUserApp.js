@@ -12,6 +12,19 @@ class SfdcUserApp extends Component {
     this.addUser = this.addUser.bind(this);
   }
 
+  componentDidMount() {
+    window.connectionService.subcribe('new-user',this.loadUsers)
+    this.loadUsers();
+  }
+
+  componentWillUnmount() {
+    window.connectionService.unsubcribe('new-user',this.loadUsers)
+  }
+
+  loadUsers() {
+
+  }
+
   addUser() {
     const { addSfdcUser } = this.props.actions
     addSfdcUser();
@@ -21,7 +34,14 @@ class SfdcUserApp extends Component {
     const { addUser } = this;
     return (
       <div>
-        <button onClick={addUser} target="_blank"><span>Add Salesforce User <FaBeer/></span></button>
+        <div className='actions-bar'>
+          <button onClick={addUser} target="_blank">
+            <span>Add Salesforce User <FaBeer/></span>
+          </button>
+        </div>
+        <div>
+
+        </div>
       </div>
     );
   }
@@ -31,7 +51,7 @@ SfdcUserApp.propTypes = {
 
 };
 
-const mapState = (state) => ({});
+const mapState = (state) => ({ sfdcUsers: state.sfdcUsers, selctedSfcdUser: state.selctedSfcdUser});
 const mapDispatch = (dispatch) => {
   return {
     actions: bindActionCreators(sfdcActions, dispatch)

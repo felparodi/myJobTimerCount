@@ -11,9 +11,10 @@ let win;
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1200,
+    width: 800,
     height: 600,
-    icon: path.join(__dirname,'assets/app-icon.png')
+    icon: path.join(__dirname,'assets/app-icon.png'),
+    title:'Tiem Mark (loading)'
   });
 
   // and load the index.html of the app.

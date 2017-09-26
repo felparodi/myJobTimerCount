@@ -1,4 +1,33 @@
-const { find, push, remove} = require("database-init");
+const _ = require("lodash");
+const database = {};
+
+const makeid = (size = 25) => {
+  let id = "";
+  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < size; i++)
+    id += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return id;
+};
+
+const push = (name, record) => {
+	record._id = makeid();
+	if (!database[name])database[name] = [];
+	database[name].push(record);
+  return record;
+}
+
+const find = (name, filter) => {
+  if(!database[name]) return [];
+  if(!filter || filter === {}) return database[name];
+  return _.find(database[name], filter);
+}
+
+const remove = (name, filter) => {
+  const removed = find(name, filter);
+  database[name] = _.reject(database[name], filter);
+  return removed;
+}
 
 module.exports = {
   find,

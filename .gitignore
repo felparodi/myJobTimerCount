@@ -3,4 +3,5 @@ caches
 package-lock.json
 test-linux-x64
 dist
+build
 src/dist-view

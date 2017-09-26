@@ -27,7 +27,7 @@ class ButtonGroup extends Component {
     return (
       <div className='buttoGroup'>
        	<button onClick={goTrak}><MdTimerOn/></button>
-       	<button onClick={goSalesforce}>Salefoce</button>
+       	<button onClick={goSalesforce}>Salesforce</button>
       </div>
     );
   }
