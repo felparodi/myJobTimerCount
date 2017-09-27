@@ -38,7 +38,6 @@ const getResponseBody = (response) => {
       body: JSON.stringify(data)
     };
     if (headers) requestData.headers = Object.assign({}, requestData.headers, headers);
-    console.log(requestData);
     return performRequest(uri, requestData);
   }
 

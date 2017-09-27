@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as traksAction from '../../actions/traksActions';
+import * as sfdcActions from '../../actions/sfdcActions';
 import TimeTrak from './TimeTrak';
 
 class TraksApp extends Component {
@@ -14,6 +15,7 @@ class TraksApp extends Component {
     this.stopTrak = this.stopTrak.bind(this);
     this.removeTrak = this.removeTrak.bind(this);
     this.updateTrak = this.updateTrak.bind(this);
+    this.sendReport = this.sendReport.bind(this);
   }
 
   componentDidMount() {
@@ -50,9 +52,14 @@ class TraksApp extends Component {
     this.props.actions.updateTrak(pos, e);
   }
 
+  sendReport() {
+    const { traks, selctedSfcdUser} = this.props;
+    this.props.sfdcActions.sendReport(selctedSfcdUser.id, traks);
+  }
+
   render() {
-    const { traks } = this.props
-    const { addTrak, stopTrak, addSubTark, removeTrak, updateTrak } = this
+    const { traks, selctedSfcdUser } = this.props
+    const { sendReport, addTrak, stopTrak, addSubTark, removeTrak, updateTrak } = this
     const traksRender = traks.map( (trak, i) => {
       return (<TimeTrak onStop={stopTrak} onChange={updateTrak} onAddSubTrak={addSubTark} onRemove={removeTrak} trak={trak}/>)
     });   
@@ -62,6 +69,12 @@ class TraksApp extends Component {
         	<button onClick={addTrak}>
             Add Trak
           </button>
+          <button onClick={sendReport}>
+            Send Report
+          </button>
+          <span>
+          { selctedSfcdUser.username }
+          </span>
         </div>
         <div>
         {traksRender}
@@ -71,14 +84,11 @@ class TraksApp extends Component {
   }
 }
 
-TraksApp.propTypes = {
-
-};
-
 const mapState = (state) => ({ traks: state.traks, selctedSfcdUser: state.selctedSfcdUser });
 const mapDispatch = (dispatch) => {
   return {
-    actions: bindActionCreators(traksAction, dispatch)
+    actions: bindActionCreators(traksAction, dispatch),
+    sfdcActions: bindActionCreators(sfdcActions, dispatch)
   };
 };
 

@@ -7,3 +7,5 @@ export const STOP_TRAK = 'STOP_TRAK';
 export const REMOVE_TRAK = 'REMOVE_TRAK';
 export const GET_SFDC_INFO = 'GET_SFDC_INFO';
 export const SALESFORCE_USERS_APP_OPEN = 'SALESFORCE_USERS_APP_OPEN';
+export const SELECT_USER = 'SELECT_USER';
+export const GET_USERS = 'GET_USERS';

@@ -13,14 +13,16 @@ const createSubTraker = (subTrak) => {
 }
 
  const addTrak = (traks) => {
-    const newTraks = traks.concat([createTraker(traks.length)])
+    let newTraks = traks.map(stop);
+    newTraks = newTraks.concat([createTraker(newTraks.length)])
     return newTraks;
 }
 
 const addSubTrak = (traks, pos) => {
   const newTraks = traks.map((trak) => {
     if (trak.trak === pos.trak) {
-      trak.sub = trak.sub.concat([createSubTraker(trak.sub.length)]);
+      let subTraks = trak.sub.map(stop);
+      trak.sub = subTraks.concat([createSubTraker(subTraks.length)]);
     }
     return trak;
   });
@@ -71,32 +73,51 @@ const valueChange = (traks, pos, e) => {
   return newTraks;
 }
 
-const stopTrakHelper  = (trak) => {
-  trak.stop = !trak.stop;
-  if (trak.stop) {
+const stop = (trak) => {
+  if (!trak.stop) {
+    trak.stop = true;
     trak.count = trak.elapsed
     trak.stops.push({ start: new Date() })
-  } else {
+    if(trak.sub) {
+      trak.sub = trak.sub.map(stop);
+    }
+  }
+  return trak;
+}
+ 
+const play = (trak) => {
+  if (trak.stop) {
+    trak.stop = false;
     trak.stops[trak.stops.length-1].end =  new Date();
     trak.lastStart = new Date();
   }
-  return trak
+  return trak;
+}
+
+const stopOrPlay  = (trak) => {
+  if (trak.stop) return play(trak);
+  return stop(trak);
 }
 
 const stopTrak = (traks, pos) => {
   const newTraks = traks.map((trak) => {
     if (trak.trak === pos.trak) {
       if (!pos.sub && pos.sub !== 0) {
-        return stopTrakHelper(trak);
+        return stopOrPlay(trak);
       } else {
-        trak.sub.map( (subTrak) => {
-          if (subTrak.subTrak === pos.sub) return stopTrakHelper(subTrak);
-
-          return subTrak;
+        let isPlay = !trak.stop;
+        trak.sub.map((subTrak) => {
+          if (subTrak.subTrak === pos.sub) {
+            const ret = stopOrPlay(subTrak);
+            isPlay = isPlay || !ret.stop;
+            return ret;
+          }
+          return stop(subTrak);
         });
+        return isPlay ? play(trak) : stop(trak);
       }
     }
-    return trak;
+    return stop(trak);
   });
   return newTraks;
 }

@@ -2,14 +2,16 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import FaBeer from 'react-icons/fa/beer';
 import * as sfdcActions from '../../actions/sfdcActions';
+import UserInfo from './userInfo';
 //import Icon from 'react-fa'
 
 class SfdcUserApp extends Component {
   constructor(props, context) {
     super(props, context);
     this.addUser = this.addUser.bind(this);
+    this.loadUsers = this.loadUsers.bind(this);
+    this.seleceUser = this.seleceUser.bind(this);
   }
 
   componentDidMount() {
@@ -22,25 +24,35 @@ class SfdcUserApp extends Component {
   }
 
   loadUsers() {
-
+    const { getUsers } = this.props.actions;
+    getUsers();
   }
 
   addUser() {
-    const { addSfdcUser } = this.props.actions
+    const { addSfdcUser } = this.props.actions;
     addSfdcUser();
   }
 
+  seleceUser(user) {
+    this.props.actions.selectUser(user);
+  }
+
   render() {
-    const { addUser } = this;
+    const { addUser, seleceUser } = this;
+    const { sfdcUsers, selctedSfcdUser } = this.props;
+    const usersRender = sfdcUsers.map( (user) => {
+      const selected = user.id === selctedSfcdUser.id;
+      return (<UserInfo user={user} selected={selected} onSelect={seleceUser} />)
+    });   
     return (
       <div>
         <div className='actions-bar'>
           <button onClick={addUser} target="_blank">
-            <span>Add Salesforce User <FaBeer/></span>
+            <span>Add Salesforce User</span>
           </button>
         </div>
         <div>
-
+          {usersRender}
         </div>
       </div>
     );
