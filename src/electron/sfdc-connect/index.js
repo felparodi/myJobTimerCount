@@ -1,27 +1,14 @@
 const sfdcOauthInfo = require('./sfdc-oauth-info');
 const sfdcOauthGetToken = require('./sfdc-oauth-get-token');
 const sfdcAddUser = require('./sfdc-add-new-user');
-require('./sfdc-get-users');
-const conection  = require('../connection');
-const server = require('../server');
-const path = require("path");
+const sfdcGetUser = require('./sfdc-get-users');
+const sfdcSendReport = require('./sfdc-send-report');
 
-
-conection.subcribe('get-oauth-connect-info', (e) => {
-	e.success({ link: sfdcOauthInfo.authorizeLink });
-});
-
-conection.subcribe('sfdc-add-new-user', (e) => {
-	e.success(null);
-	sfdcAddUser.openLoginPage();
-});
-
-server.app.get('/aouth/sforce', (req, res) => {
-  console.log(req.query);
-  res.sendFile(path.join(__dirname+'/sfdc-callback.html'));
-  sfdcOauthGetToken.registerClient(req.query.code);
-});
 
 module.exports = {
-	sfdcOauthInfo
+	sfdcOauthInfo,
+	sfdcOauthGetToken,
+	sfdcAddUser,
+	sfdcGetUser,
+	sfdcSendReport
 }

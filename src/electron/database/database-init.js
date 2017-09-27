@@ -20,7 +20,10 @@ const push = (name, record) => {
 const find = (name, filter) => {
   if(!database[name]) return [];
   if(!filter || filter === {}) return database[name];
-  return _.find(database[name], filter);
+  let ret = _.find(database[name], filter)
+  if (_.isUndefined(ret)) return [];
+  if (_.isArray(ret)) return ret;
+  return [ret];
 }
 
 const remove = (name, filter) => {

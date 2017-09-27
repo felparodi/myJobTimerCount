@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron');
 const Promise = require('promise');
-
+const Mousetrap = require('mousetrap');
 
 const actions = {
   test: 'test-asyc-action',
@@ -41,6 +41,19 @@ const subcribe = (action, func) => {
 const unsubcribe = (action, func) => {
   ipcRenderer.removeListener(action, func);
 };
+
+//Commad keys
+Mousetrap.bind('up up down down left right left right b a enter', () => {
+  console.log('konami code');
+  service('open-konami-code-easter-egg');
+  return false;
+});
+
+Mousetrap.bind(['command+shif+d', 'ctrl+shift+d'], () => {
+  service('open-dev-console').then(console.log);
+  return false;
+});
+
 
 module.exports = {
   service,

@@ -1,7 +1,9 @@
 const service = require('../service-connections');
+const server = require('../server');
 const sfdcOauthInfo = require('./sfdc-oauth-info');
 const database = require('../database');
 const conection  = require('../connection');
+const path = require('path');
 
 const registerClient = (code) => {
 	
@@ -21,6 +23,14 @@ const addUser = (idUser, authToken, domain, tokenId) => {
 	header = { 'Authorization':`Bearer ${authToken}` }
 	service.get(idUser, header).then(callback).catch(console.log);
 }
+
+
+server.app.get('/aouth/sforce', (req, res) => {
+  console.log(req.query);
+  res.sendFile(path.join(__dirname+'/sfdc-callback.html'));
+  registerClient(req.query.code);
+});
+
 module.exports = {
 	registerClient
 }

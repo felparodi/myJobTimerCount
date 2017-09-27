@@ -33,6 +33,7 @@
     "express": "^4.15.4",
     "lodash": "^4.17.4",
     "moment": "2.15.1",
+    "mousetrap": "^1.6.1",
     "object-assign": "4.1.0",
     "promise": "^8.0.1",
     "prune": "0.0.2",

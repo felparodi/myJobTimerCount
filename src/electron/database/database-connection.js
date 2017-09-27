@@ -1,9 +1,8 @@
-const { find, push, remove} = require("database-init");
+const { find, push, remove} = require("./database-init");
 const conection  = require('../connection');
 
-
 conection.subcribe('find-database', (e, param) => {
-	e.succes(find(param.dbname, param.filter));
+	e.success(find(param.dbname, param.filter));
 });
 
 module.exports = {

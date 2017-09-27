@@ -2,8 +2,9 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 require('./server');
-require('./connection');
+const connection = require('./connection');
 require('./sfdc-connect');
+require('./easter-egg');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
@@ -23,9 +24,14 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  
+
   // Open the DevTools.
-  win.webContents.openDevTools();
+  connection.subcribe('open-dev-console',
+    () => {
+       win.webContents.openDevTools();
+    }
+  );
+ 
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
