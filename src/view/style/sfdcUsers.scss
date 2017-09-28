@@ -1,0 +1,13 @@
+.user-info {
+	border: solid 0.5px;
+	background-color: white;
+	margin: 5px;
+	padding: 5px 15px;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+	
+	&.selected {
+		background-color: white;
+	}
+}

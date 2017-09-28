@@ -1,6 +1,17 @@
 .buttoGroup {
 	button {
-		background-color: transparent;
+
 		border: solid;
+		width: 60px;
+		height: 60px;
+		margin: 5px;
+		border-radius: 10px;
+		word-wrap: break-word;
+		overflow: hidden;
+
+		>svg {
+			height: 100%;
+			width: 100%;
+		}
 	}
 }

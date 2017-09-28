@@ -1,12 +1,13 @@
 const _ = require("lodash");
 const database = {};
+const fs = require('fs');
 
 const makeid = (size = 25) => {
   let id = "";
   const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for (let i = 0; i < size; i++)
+  for (let i = 0; i < size; i++) {
     id += possible.charAt(Math.floor(Math.random() * possible.length));
-
+  }
   return id;
 };
 

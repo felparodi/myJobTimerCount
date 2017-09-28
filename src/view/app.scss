@@ -31,5 +31,14 @@ html {
 	    width: 100%;
 	    background-color: #745b88;
 	    padding: 5px;
+	     
+	    >button {
+	    	 border-radius: 5px;
+	    	 margin-left: 15px;
+	    }
+	    >.info {
+    	    margin-left: auto;
+    		margin-right: 10px;
+	    }
 	}
 }

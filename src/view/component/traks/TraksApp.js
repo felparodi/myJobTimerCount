@@ -72,9 +72,9 @@ class TraksApp extends Component {
           <button onClick={sendReport}>
             Send Report
           </button>
-          <span>
+          <div className='info'>
           { selctedSfcdUser.username }
-          </span>
+          </div>
         </div>
         <div>
         {traksRender}

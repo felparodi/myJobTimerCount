@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as sfdcActions from '../../actions/sfdcActions';
 import UserInfo from './userInfo';
+import FaUserPluse from 'react-icons/fa/user-plus';
+import '../../style/sfdcUsers.scss';
 //import Icon from 'react-fa'
 
 class SfdcUserApp extends Component {
@@ -25,7 +27,7 @@ class SfdcUserApp extends Component {
 
   loadUsers() {
     const { getUsers } = this.props.actions;
-    getUsers();
+    //getUsers();
   }
 
   addUser() {
@@ -41,14 +43,14 @@ class SfdcUserApp extends Component {
     const { addUser, seleceUser } = this;
     const { sfdcUsers, selctedSfcdUser } = this.props;
     const usersRender = sfdcUsers.map( (user) => {
-      const selected = user.id === selctedSfcdUser.id;
+      const selected = (user.id === selctedSfcdUser.id);
       return (<UserInfo user={user} selected={selected} onSelect={seleceUser} />)
     });   
     return (
       <div>
         <div className='actions-bar'>
           <button onClick={addUser} target="_blank">
-            <span>Add Salesforce User</span>
+            <span>Salesforce <FaUserPluse/></span>
           </button>
         </div>
         <div>

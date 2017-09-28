@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as appAction from '../../actions/appActions';
 import MdTimerOn from'react-icons/md/timer';
+import IoCloud from'react-icons/io/cloud'
+import '../../style/ButtonGroup.scss';
 
 const { object } = PropTypes;
 
@@ -27,7 +29,7 @@ class ButtonGroup extends Component {
     return (
       <div className='buttoGroup'>
        	<button onClick={goTrak}><MdTimerOn/></button>
-       	<button onClick={goSalesforce}>Salesforce</button>
+       	<button onClick={goSalesforce}><IoCloud/></button>
       </div>
     );
   }
