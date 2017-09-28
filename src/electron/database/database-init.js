@@ -1,14 +1,30 @@
 const _ = require("lodash");
+const path = require("path");
 let database = {};
-const fs = require('fs');
+const fs = require('fs-extra');
 //Max Database 5MB
 const buf = new Buffer(1024*1024*5);
+const databaeFolder = path.join(__dirname,'../../..','database');
+const databaePath = path.join(databaeFolder, 'database.json');
 
+const createDatabase = () => {
+  fs.ensureDirSync(databaeFolder);
+  saveDatabase();
+}
 
+const saveDatabase =  () => {
+  fs.writeFile(databaePath, JSON.stringify(database), 
+      (err) => { 
+        if(err) return console.error(err);
+        console.log('Update Database');
+      });
+}
 
-fs.open('database/database.json', 'r+',(err, fd) => {
+fs.open(databaePath, 'r+',(err, fd) => {
    if (err) {
+      if(err.errno === -2) createDatabase();
       return console.error(err);
+
    }
    fs.read(fd, buf, 0, buf.length, 0, (err, bytes) => {
       if (err){
@@ -36,11 +52,7 @@ const push = (name, record) => {
 	record._id = makeid();
 	if (!database[name])database[name] = [];
 	database[name].push(record);
-  fs.writeFile('database/database.json', JSON.stringify(database), 
-      (err) => { 
-        if(err) return console.error(err);
-        console.log('Update Database');
-      });
+  saveDatabase();
   return record;
 }
 
@@ -56,7 +68,7 @@ const find = (name, filter) => {
 const remove = (name, filter) => {
   const removed = find(name, filter);
   database[name] = _.reject(database[name], filter);
-  fs.writeFile('database/database.json', JSON.stringify(database));
+  saveDatabase();
   return removed;
 }
 
