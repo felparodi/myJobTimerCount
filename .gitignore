@@ -4,4 +4,5 @@ package-lock.json
 test-linux-x64
 dist
 build
+database
 src/dist-view

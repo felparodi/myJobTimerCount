@@ -27,7 +27,7 @@ class SfdcUserApp extends Component {
 
   loadUsers() {
     const { getUsers } = this.props.actions;
-    //getUsers();
+    getUsers();
   }
 
   addUser() {
